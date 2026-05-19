@@ -4,11 +4,13 @@ services:
   postgres:
     image: circleci/postgres:12.2-ram
     ports:
-      - 5432:5432
+      - 5411:5432
     environment:
       POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_INITDB_ARGS: "--data-checksums"
+    command: postgres -c checkpoint_timeout=3600 -c max_wal_size=1GB
 
   redis:
     image: redis:alpine
     ports:
-      - 6379:6379
+      - 6311:6379
